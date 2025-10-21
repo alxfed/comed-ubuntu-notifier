@@ -128,7 +128,7 @@ if __name__ == "__main__":
                 f"Before: {before};  Before before: {before_before}.  Trend: {trend}",
                 "weather-showers-scattered"
             )
-            print(f"Sent a norma notification about price {price} ¢/kWh at ", datetime.now().strftime("%H:%M"))
+            print(f"Sent a normal notification about price {price} ¢/kWh at ", datetime.now().strftime("%H:%M"))
         elif price >= 2.0:
             ''' Higher than 2 ¢/kWh
             '''
@@ -138,7 +138,7 @@ if __name__ == "__main__":
                 f"Before: {before};  Before before: {before_before}.  Trend: {trend}",
                 "weather-clear"
             )
-            print(f"Sent a low notification about price {price} ¢/kWh at ", datetime.now().strftime("%H:%M"))
+            print(f"Sent a low urgencynotification about price {price} ¢/kWh at ", datetime.now().strftime("%H:%M"))
         else:
             ''' Lower than 2 ¢/kWh
             '''

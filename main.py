@@ -142,6 +142,6 @@ if __name__ == "__main__":
         else:
             ''' Lower than 2 ¢/kWh
             '''
-            print("Price is ", price, " ¢/kWh at ", time_stamp.strftime("%H:%M"))
+            print("Price is ", price, " ¢/kWh at ", time_stamp.strftime("%H:%M"), " no need to send a notification.")
 
         time.sleep(300) # Wait for 5 minutes

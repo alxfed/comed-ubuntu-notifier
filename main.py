@@ -108,7 +108,7 @@ if __name__ == "__main__":
                 f"Before: {before};  Before before: {before_before}.  Trend: {trend}",
                 "weather-storm"
             )
-            print(f"Sent a critical notification about price {price} ¢/kWh at ", datetime.now().strftime("%H:%M"))
+            print(f"Sent a critical notification about price {price} ¢/kWh at ", time_stamp.strftime("%H:%M"))
         elif price >= 6.0:
             ''' Higher than 6 ¢/kWh but lower than 10 ¢/kWh
             '''
@@ -118,7 +118,7 @@ if __name__ == "__main__":
                 f"Before: {before};  Before before: {before_before}.  Trend: {trend}",
                 "weather-severe-alert"
             )
-            print(f"Sent a normal notification about price {price} ¢/kWh at ", datetime.now().strftime("%H:%M"))
+            print(f"Sent a normal notification about price {price} ¢/kWh at ", time_stamp.strftime("%H:%M"))
         elif price >= 4.0:
             ''' Higher than 4 ¢/kWh but lower than 6 ¢/kWh
             '''
@@ -128,7 +128,7 @@ if __name__ == "__main__":
                 f"Before: {before};  Before before: {before_before}.  Trend: {trend}",
                 "weather-showers-scattered"
             )
-            print(f"Sent a normal notification about price {price} ¢/kWh at ", datetime.now().strftime("%H:%M"))
+            print(f"Sent a normal notification about price {price} ¢/kWh at ", time_stamp.strftime("%H:%M"))
         elif price >= 2.0:
             ''' Higher than 2 ¢/kWh
             '''
@@ -138,7 +138,7 @@ if __name__ == "__main__":
                 f"Before: {before};  Before before: {before_before}.  Trend: {trend}",
                 "weather-clear"
             )
-            print(f"Sent a low urgency notification about price {price} ¢/kWh at ", datetime.now().strftime("%H:%M"))
+            print(f"Sent a low urgency notification about price {price} ¢/kWh at ", time_stamp.strftime("%H:%M"))
         else:
             ''' Lower than 2 ¢/kWh
             '''

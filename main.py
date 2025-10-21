@@ -104,7 +104,7 @@ if __name__ == "__main__":
             '''
             send_notification(
                 'critical',
-                f'ComEd® price (at {time_stamp.strftime("%H:%M")}) :     {price} ¢/kWh',
+                f'({time_stamp.strftime("%H:%M")}) ComEd® price :     {price} ¢/kWh',
                 f"Before: {before};  Before before: {before_before}.  Trend: {trend}",
                 "weather-storm"
             )
@@ -114,7 +114,7 @@ if __name__ == "__main__":
             '''
             send_notification(
                 'normal',
-                f'ComEd® price (at {time_stamp.strftime("%H:%M")}) :     {price} ¢/kWh',
+                f'({time_stamp.strftime("%H:%M")}) ComEd® price :     {price} ¢/kWh',
                 f"Before: {before};  Before before: {before_before}.  Trend: {trend}",
                 "weather-severe-alert"
             )
@@ -124,7 +124,7 @@ if __name__ == "__main__":
             '''
             send_notification(
                 'normal',
-                f'ComEd® price (at {time_stamp.strftime("%H:%M")}) :     {price} ¢/kWh',
+                f'({time_stamp.strftime("%H:%M")}) ComEd® price :     {price} ¢/kWh',
                 f"Before: {before};  Before before: {before_before}.  Trend: {trend}",
                 "weather-showers-scattered"
             )
@@ -134,7 +134,7 @@ if __name__ == "__main__":
             '''
             send_notification(
                 'low',
-                f'ComEd® price (at {time_stamp.strftime("%H:%M")}) :     {price} ¢/kWh',
+                f'({time_stamp.strftime("%H:%M")}) ComEd® price :     {price} ¢/kWh',
                 f"Before: {before};  Before before: {before_before}.  Trend: {trend}",
                 "weather-clear"
             )
@@ -142,6 +142,6 @@ if __name__ == "__main__":
         else:
             ''' Lower than 2 ¢/kWh
             '''
-            print("Price is ", price, " ¢/kWh at ", time_stamp.strftime("%H:%M"), " no need to send a notification.")
+            print(f'({time_stamp.strftime("%H:%M")}) Price is ', price, " ¢/kWh.", " no need to send a notification.")
 
         time.sleep(300) # Wait for 5 minutes

@@ -138,7 +138,7 @@ if __name__ == "__main__":
                 f"Before: {before};  Before before: {before_before}.  Trend: {trend}",
                 "weather-clear"
             )
-            print(f"Sent a low urgencynotification about price {price} ¢/kWh at ", datetime.now().strftime("%H:%M"))
+            print(f"Sent a low urgency notification about price {price} ¢/kWh at ", datetime.now().strftime("%H:%M"))
         else:
             ''' Lower than 2 ¢/kWh
             '''

@@ -12,54 +12,136 @@ from datetime import datetime, timedelta
 from comed_prices import five_minute_prices
 
 
-def send_notification(title, message, icon='dialog-information'):
-    """
-    Sends a desktop notification using the notify-send command-line tool.
+TIMEZONE = 'America/Chicago'
+# see ZoneInfo documentation for details if necessary.
+# https://docs.python.org/3/library/zoneinfo.html
+
+
+def send_notification(urgency, title, message, icon='dialog-information'):
+    """ Sends a Ubuntu® desktop notification using the notify-send command-line tool.
     """
     try:
         subprocess.run([
             'notify-send',
             '--icon=' + icon,
+            '--urgency=' + urgency,
             title,
             message
         ], check=True)
-        # print("Notification sent successfully via notify-send.")
     except (subprocess.CalledProcessError, FileNotFoundError):
         print("Error: 'notify-send' command not found or failed.")
         print("Please install it with 'sudo apt install libnotify-bin'")
 
 
 def read_prices():
+    """ Download five-minute prices from ComEd® website, using
+        the 'comed-prices' Python library.
+        https://pypi.org/project/comed-prices/
+    """
     now = datetime.now()
     time_20_min_ago = now - timedelta(minutes=20)
     time_format = "%Y%m%d%H%M"
     current_time_str = now.strftime(time_format)
     past_time_str = time_20_min_ago.strftime(time_format)
+
+    # Read the prices in a time interval that would
+    # return at least 3 prices.
     prices = five_minute_prices(
         start=past_time_str,
         end=current_time_str,
-        tz='America/Chicago')
-    print("Checked at ", now.strftime("%H:%M"))
-    price = prices[0]['price']
-    previous_price = prices[1]['price']
-    before_previous_price = prices[2]['price']
-    return price, previous_price, before_previous_price
+        tz=TIMEZONE)
+
+    # report the time at which the prices were checked
+    # and the program was working properly.
+    print("Checked the prices at ", now.strftime("%H:%M"), "  local time")
+    if len(prices) >= 3:
+        # The API has returned 3 or more prices in the 20min interval.
+        # Process the prices and a timestamp of the latest one.
+        newest_price_record = prices[0]
+        price = newest_price_record['price']
+        time_stamp = newest_price_record['local_time']
+
+        # Other prices for calculating the trend.
+        previous_price = prices[1]['price']
+        before_previous_price = prices[2]['price']
+
+        return time_stamp,price, previous_price, before_previous_price
+
+    elif len(prices) < 3:
+        # Sometimes there are 'holes' in the data.
+        # Process the price and a timestamp of the latest one.
+        newest_price_record = prices[0]
+        price = newest_price_record['price']
+        time_stamp = newest_price_record['local_time']
+
+        return time_stamp, price, price, price
+
+    else:
+        # The API has not returned any prices at all
+        # (is not working properly).
+        print("Error: API is not working properly, it has not returned any prices.")
+        return now, 0, 0, 0
 
 
 if __name__ == "__main__":
-    print("Starting background notification loop (using notify-send)...")
-    count = 1
+    """ Start from the command line in this directory 
+        by running 'python3 main.py'.
+    """
+    print(f"Starting the ComEd® Ubuntu® desktop notifier in {TIMEZONE} at ", datetime.now().strftime("%H:%M"))
     while True:
-        price, before, before_before = read_prices()
+        # Read the prices and a timestamp of the latest one
+        time_stamp,price, before, before_before = read_prices()
+
+        # Calculate the trend
         if price > before:
             trend = "up"
         else:
             trend = "down"
-        if price >= 2.0:
+
+        # Send a particular notification if necessary.
+        if price >= 10.0:
+            ''' Higher than 10 ¢/kWh
+            '''
             send_notification(
-                f"ComEd price: {price} cents/kWh",
-                f"Before: {before}.  Trend: {trend}",
-                # "utilities-system-monitor" # A different standard icon
+                'critical',
+                f'ComEd® price (at {time_stamp.strftime("%H:%M")}) :     {price} ¢/kWh',
+                f"Before: {before};  Before before: {before_before}.  Trend: {trend}",
+                "weather-storm"
             )
-            print("Notified at ", datetime.now().strftime("%H:%M"))
-        time.sleep(3000) # Wait for 30 seconds
+            print(f"Sent a critical notification about price {price} ¢/kWh at ", datetime.now().strftime("%H:%M"))
+        elif price >= 6.0:
+            ''' Higher than 6 ¢/kWh but lower than 10 ¢/kWh
+            '''
+            send_notification(
+                'normal',
+                f'ComEd® price (at {time_stamp.strftime("%H:%M")}) :     {price} ¢/kWh',
+                f"Before: {before};  Before before: {before_before}.  Trend: {trend}",
+                "weather-severe-alert"
+            )
+            print(f"Sent a normal notification about price {price} ¢/kWh at ", datetime.now().strftime("%H:%M"))
+        elif price >= 4.0:
+            ''' Higher than 4 ¢/kWh but lower than 6 ¢/kWh
+            '''
+            send_notification(
+                'normal',
+                f'ComEd® price (at {time_stamp.strftime("%H:%M")}) :     {price} ¢/kWh',
+                f"Before: {before};  Before before: {before_before}.  Trend: {trend}",
+                "weather-showers-scattered"
+            )
+            print(f"Sent a norma notification about price {price} ¢/kWh at ", datetime.now().strftime("%H:%M"))
+        elif price >= 2.0:
+            ''' Higher than 2 ¢/kWh
+            '''
+            send_notification(
+                'low',
+                f'ComEd® price (at {time_stamp.strftime("%H:%M")}) :     {price} ¢/kWh',
+                f"Before: {before};  Before before: {before_before}.  Trend: {trend}",
+                "weather-clear"
+            )
+            print(f"Sent a low notification about price {price} ¢/kWh at ", datetime.now().strftime("%H:%M"))
+        else:
+            ''' Lower than 2 ¢/kWh
+            '''
+            print("Price is ", price, " ¢/kWh at ", time_stamp.strftime("%H:%M"))
+
+        time.sleep(300) # Wait for 5 minutes

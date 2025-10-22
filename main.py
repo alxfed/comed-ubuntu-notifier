@@ -99,6 +99,7 @@ if __name__ == "__main__":
             trend = "down"
 
         # Send a particular notification if necessary.
+        # Icons - at the end of https://wiki.ubuntu.com/UbuntuStudio/Artwork/UbuntuStudioIconSet
         if price >= 10.0:
             ''' Higher than 10 ¢/kWh
             '''

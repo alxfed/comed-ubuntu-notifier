@@ -104,17 +104,18 @@ if __name__ == "__main__":
             '''
             send_notification(
                 'critical',
-                f'({time_stamp.strftime("%H:%M")}) ComEd® price :     {price} ¢/kWh',
+                f'({time_stamp.strftime("%H:%M")}) ComEd® price :  {price} ¢/kWh',
                 f"Before: {before};  Before before: {before_before}.  Trend: {trend}",
                 "weather-storm"
             )
+            print('\a') # Make a sound
             print(f"Sent a critical notification about price {price} ¢/kWh at ", time_stamp.strftime("%H:%M"))
         elif price >= 6.0:
             ''' Higher than 6 ¢/kWh but lower than 10 ¢/kWh
             '''
             send_notification(
                 'normal',
-                f'({time_stamp.strftime("%H:%M")}) ComEd® price :     {price} ¢/kWh',
+                f'({time_stamp.strftime("%H:%M")}) ComEd® price :  {price} ¢/kWh',
                 f"Before: {before};  Before before: {before_before}.  Trend: {trend}",
                 "weather-severe-alert"
             )
@@ -124,7 +125,7 @@ if __name__ == "__main__":
             '''
             send_notification(
                 'normal',
-                f'({time_stamp.strftime("%H:%M")}) ComEd® price :     {price} ¢/kWh',
+                f'({time_stamp.strftime("%H:%M")}) ComEd® price :  {price} ¢/kWh',
                 f"Before: {before};  Before before: {before_before}.  Trend: {trend}",
                 "weather-showers-scattered"
             )
@@ -134,7 +135,7 @@ if __name__ == "__main__":
             '''
             send_notification(
                 'low',
-                f'({time_stamp.strftime("%H:%M")}) ComEd® price :     {price} ¢/kWh',
+                f'({time_stamp.strftime("%H:%M")}) ComEd® price :  {price} ¢/kWh',
                 f"Before: {before};  Before before: {before_before}.  Trend: {trend}",
                 "weather-clear"
             )

@@ -126,7 +126,7 @@ if __name__ == "__main__":
                 'normal',
                 f'({time_stamp.strftime("%H:%M")}) ComEd® price :  {price} ¢/kWh',
                 f"Before: {before};  Before before: {before_before}.  Trend: {trend}",
-                "weather-showers-scattered"
+                "weather-few-clouds"
             )
             print(f"Sent a normal notification about price {price} ¢/kWh at ", time_stamp.strftime("%H:%M"))
         elif price >= 2.0:

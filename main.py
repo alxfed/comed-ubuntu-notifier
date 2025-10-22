@@ -108,7 +108,6 @@ if __name__ == "__main__":
                 f"Before: {before};  Before before: {before_before}.  Trend: {trend}",
                 "weather-storm"
             )
-            print('\a') # Make a sound
             print(f"Sent a critical notification about price {price} ¢/kWh at ", time_stamp.strftime("%H:%M"))
         elif price >= 6.0:
             ''' Higher than 6 ¢/kWh but lower than 10 ¢/kWh

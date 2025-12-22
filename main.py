@@ -143,6 +143,12 @@ if __name__ == "__main__":
         else:
             ''' Lower than 2 ¢/kWh
             '''
-            print(f'({time_stamp.strftime("%H:%M")}) Price is ', price, " ¢/kWh.", " no need to send a notification.")
+            send_notification(
+                'low',
+                f'({time_stamp.strftime("%H:%M")}) ComEd® price :  {price} ¢/kWh',
+                f"Before: {before};  Before before: {before_before}.  Trend: {trend}",
+                "weather-clear"
+            )
+            print(f"Sent a low urgency notification about price {price} ¢/kWh at ", time_stamp.strftime("%H:%M"))
 
         time.sleep(253) # Wait for 5 minutes

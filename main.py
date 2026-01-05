@@ -149,6 +149,6 @@ if __name__ == "__main__":
                 f"Before: {before};  Before before: {before_before}.  Trend: {trend}",
                 "weather-clear"
             )
-            print(f"Sent a low urgency notification about price {price} ¢/kWh at ", time_stamp.strftime("%H:%M"))
+            print(f"Sent a low urgency notification about the price {price} ¢/kWh at ", time_stamp.strftime("%H:%M"))
 
         time.sleep(253) # Wait for 5 minutes
